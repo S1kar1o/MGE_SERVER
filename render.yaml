@@ -1,25 +1,26 @@
 services:
   - type: web
     name: mge-heroes-api
-    env: docker  # Використовуємо Docker runtime
-    region: oregon  # Або ваш регіон
-    plan: free  # Для тестів
-    dockerfilePath: ./Dockerfile  # Шлях до Dockerfile
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health  # Додаємо для Render
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
-        value: http://0.0.0.0:$PORT  # Render призначає порт через $PORT
+        value: http://0.0.0.0:$PORT
       - key: JWT__SecretKey
-        sync: false  # Додайте в Render Dashboard
+        sync: false
       - key: JWT__Issuer
         value: mge-heroes-app
       - key: JWT__Audience
         value: mge-heroes-users
       - key: SUPABASE_URL
-        sync: false  # Додайте ваш Supabase URL
+        sync: false
       - key: SUPABASE_ANON_KEY
-        sync: false  # Додайте ваш Supabase ключ
+        sync: false
     autoDeploy: true
 
 databases:

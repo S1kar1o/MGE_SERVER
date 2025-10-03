@@ -13,7 +13,7 @@ COPY ["MGE_HEROES.Server/MGE_HEROES.Server.csproj", "."]
 RUN dotnet restore "MGE_HEROES.Server.csproj"
 # Копіюємо решту файлів і публікуємо
 COPY . .
-RUN dotnet publish "MGE_HEROES.Server.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MGE_HEROES.Server/MGE_HEROES.Server.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Фінальний образ
 FROM base AS final
