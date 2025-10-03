@@ -9,7 +9,7 @@ ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 # Копіюємо .csproj і відновлюємо залежності
-COPY ["MGE_HEROES.Server.csproj", "."]
+COPY ["MGE_HEROES.Server/MGE_HEROES.Server.csproj", "."]
 RUN dotnet restore "MGE_HEROES.Server.csproj"
 # Копіюємо решту файлів і публікуємо
 COPY . .
