@@ -52,15 +52,19 @@ app.MapControllers();
 
 // Додаємо health check ендпоінт
 app.MapGet("/health", () => Results.Ok("Server is running"));
-
-// Налаштування WebSocket
 app.Map("/ws", async context =>
 {
     if (context.WebSockets.IsWebSocketRequest)
     {
         using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
         var connectionManager = context.RequestServices.GetRequiredService<ConnectionManager>();
-        await connectionManager.HandleWebSocketAsync(webSocket, context.Request.Query["userId"]);
+        var userId = context.Request.Query["userId"].ToString();
+        if (string.IsNullOrEmpty(userId))
+        {
+            await webSocket.CloseAsync(WebSocketCloseStatus.InvalidPayloadData, "userId is required", CancellationToken.None);
+            return;
+        }
+        await connectionManager.HandleWebSocketAsync(webSocket, userId);
     }
     else
     {
