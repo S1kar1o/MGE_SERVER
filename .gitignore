@@ -1,0 +1,60 @@
+# Файли компіляції та білду
+bin/
+obj/
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Папки та файли NuGet
+packages/
+*.nupkg
+!*.nupkg.metadata
+!*.nupkg.sha512
+
+# Файли конфігурації з чутливими даними
+appsettings.*.json
+appsettings.json
+secrets.json
+
+# Локальні файли IDE (Visual Studio, VS Code, Rider)
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+
+# Файли логів
+*.log
+logs/
+
+# Тимчасові файли
+*.cache
+*.bak
+*.tmp
+*.temp
+
+# Файли публікації
+publish/
+
+# Файли тестів і покриття коду
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Файли Docker
+Dockerfile.user
+docker-compose.*.yml
+
+# Файли macOS
+.DS_Store
+
+# Файли Windows
+Thumbs.db
+
+# Інші
+*.pdb
+*.dll
+*.exe

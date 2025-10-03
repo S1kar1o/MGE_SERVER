@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <PostBuildEvent>
+		  copy "$(TargetDir)Mge_Heroes_ClassLibrary.dll" "H:\GAME\MGE Stone\Assets\Scripts\Multiplayer\DLLs\"
+	  </PostBuildEvent>
+
+  </PropertyGroup>
+
+</Project>
