@@ -1,46 +1,30 @@
-# Render Blueprint для ASP.NET Core сервера з PvP (MGE_HEROES)
-# Розмістіть у корені репозиторію (наприклад, MGE_HEROES.Server/)
-# Документація: https://render.com/docs/blueprint-spec
-
 services:
-  # Web Service для ASP.NET Core API (з WebSocket та Auth)
   - type: web
-    name: mge-heroes-api  # Назва сервісу (використовується в URL: mge-heroes-api.onrender.com)
-    env: dotnet  # Runtime: dotnet для ASP.NET Core (автоматично dotnet build & dotnet run)
-    region: oregon  # Регіон: oregon, frankfurt, singapore, ohio (виберіть найближчий)
-    plan: free  # План: free (для тестів), starter ($7/міс) для продакшну
-    buildCommand: dotnet restore && dotnet publish -c Release -o ./publish  # Команда білду (публікація в Release)
-    startCommand: dotnet ./publish/MGE_HEROES.Server.dll  # Команда запуску (замініть на назву вашого DLL)
-    envVars:  # Змінні середовища (додайте в Render Dashboard для секретів)
+    name: mge-heroes-api
+    env: docker  # <- Змінено на Docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./MGE_HEROES.Server/Dockerfile  # Шлях до Dockerfile, якщо не в корені
+    envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:$PORT
       - key: JWT__SecretKey
-        sync: false  # Не комітьте! Вкажіть в Dashboard: "your_super_secret_key_32_bytes_or_more"
+        sync: false
       - key: JWT__Issuer
         value: mge-heroes-app
       - key: JWT__Audience
         value: mge-heroes-users
-      - key: SUPABASE_URL  # Якщо використовуєте Supabase
-        sync: false  # Не комітьте! Вкажіть ваш Supabase URL
-      - key: SUPABASE_ANON_KEY
-        sync: false  # Не комітьте! Вкажіть ваш Supabase ключ
-      - key: ConnectionStrings__DefaultConnection  # Для локальної БД (якщо не Supabase)
-        sync: false  # Приклад: "Host=postgres://...;Database=mge_db"
-    autoDeploy: true  # Автоматичний розгорт при push до main/master
-    healthCheckPath: /health  # Опціонально: ендпоінт для перевірки здоров'я (додайте в контролер)
-
-databases:
-  # PostgreSQL база даних (альтернатива Supabase для повного контролю)
-  - name: mge-heroes-db  # Назва БД
-    databaseName: mge_db  # Ім'я бази в PostgreSQL
-    user: mge_user  # Користувач (генерується Render)
-    region: oregon  # Той самий регіон, що й сервіс
-    plan: free  # Free tier: 90 днів, 512MB RAM (потім $7/міс)
-
-envGroups:  # Групи змінних для поширення між сервісами (опціонально)
-  - name: mge-secrets
-    envVars:
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_ANON_KEY
         sync: false
+    autoDeploy: true
+
+databases:
+  - name: mge-heroes-db
+    databaseName: mge_db
+    user: mge_user
+    region: oregon
+    plan: free
