@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Supabase;
+﻿using Supabase;
 
 namespace MGE_HEROES.Server
 {

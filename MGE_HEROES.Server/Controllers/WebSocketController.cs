@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MGE_HEROES.Server;
-using MGE_HEROES.Server.Services;
-using System.Net.WebSockets;
-using System.Threading.Tasks;
 using MGE_HEROES.Server.Servises;
 
 namespace MGE_HEROES.Server.Controllers
@@ -12,9 +8,9 @@ namespace MGE_HEROES.Server.Controllers
     public class WebSocketController : ControllerBase
     {
         private readonly ConnectionManager _connectionManager;
-        private readonly MessageProccesor _messageProcessor;
+        private readonly MessageProcessor _messageProcessor;
 
-        public WebSocketController(ConnectionManager connectionManager, MessageProccesor messageProcessor)
+        public WebSocketController(ConnectionManager connectionManager, MessageProcessor messageProcessor)
         {
             _connectionManager = connectionManager;
             _messageProcessor = messageProcessor;

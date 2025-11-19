@@ -23,7 +23,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddSingleton<ConnectionManager>();
-builder.Services.AddSingleton<MessageProccesor>(); // Виправте опечатку, якщо це "MessageProcessor"
+builder.Services.AddSingleton<MessageProcessor>(); // Виправте опечатку, якщо це "MessageProcessor"
+
+builder.Services.AddScoped<CardRepository>();
+builder.Services.AddScoped<CardService>();
 
 // Настройка CORS
 builder.Services.AddCors(options =>

@@ -1,6 +1,6 @@
 ﻿namespace MGE_HEROES.Server.Servises
 {
-    public class MessageProccesor
+    public class MessageProcessor
     {
         public void StartProcessingMessage(string message)
         {

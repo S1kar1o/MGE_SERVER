@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MGE_HEROES.Server.Models
+namespace MGE_HEROES.Server.ModelDTO
 {
     public class RegisterRequest
     {

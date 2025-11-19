@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MGE_HEROES.Server.Services;
 using MGE_HEROES.Server.Servises;
 
 namespace MGE_HEROES.Server
@@ -26,9 +22,9 @@ namespace MGE_HEROES.Server
     public class ConnectionManager
     {
         private readonly ConcurrentDictionary<string, GameConnection> _connections = new();
-        private readonly MessageProccesor _messageProcessor;
+        private readonly MessageProcessor _messageProcessor;
 
-        public ConnectionManager(MessageProccesor messageProcessor)
+        public ConnectionManager(MessageProcessor messageProcessor)
         {
             _messageProcessor = messageProcessor;
         }
@@ -71,7 +67,7 @@ namespace MGE_HEROES.Server
             }
         }
 
-        public async Task HandleWebSocketAsync(WebSocket socket, string userId, MessageProccesor messageProcessor = null)
+        public async Task HandleWebSocketAsync(WebSocket socket, string userId, MessageProcessor messageProcessor = null)
         {
             User user = new User();
             if (!string.IsNullOrEmpty(userId) && Guid.TryParse(userId, out var parsedUserId))

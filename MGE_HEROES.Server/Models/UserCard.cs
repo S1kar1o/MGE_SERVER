@@ -1,0 +1,13 @@
+﻿using Supabase.Postgrest.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MGE_HEROES.Server.Models
+{
+    public class UserCard: BaseModel
+    {
+        [Column("user_id")]
+        public Guid OwnerId { get; set; }
+        [Column("card_id")]
+        public int CardId {  get; set; }
+    }
+}

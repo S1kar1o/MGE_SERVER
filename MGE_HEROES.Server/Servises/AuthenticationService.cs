@@ -29,7 +29,7 @@ namespace MGE_HEROES.Server.Services
             try
             {
                 var users = await _supabase.From<User>()
-                    .Where(u => u.EmailHash == email) // або u.Email, якщо не хешуєте
+                    .Where(u => u.EmailHash == email)
                     .Get();
 
                 var user = users.Models.FirstOrDefault();
@@ -95,10 +95,10 @@ namespace MGE_HEROES.Server.Services
         {
             var claims = new[]
             {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim(ClaimTypes.Email, user.EmailHash)
-    };
+               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+               new Claim(ClaimTypes.Name, user.Username),
+              new Claim(ClaimTypes.Email, user.EmailHash)
+            };
 
             // Використовуйте ключ довжиною щонайменше 32 байти
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this_is_a_very_long_secret_key_32_bytes!")); // 32+ байти
