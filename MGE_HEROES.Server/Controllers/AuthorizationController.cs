@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MGE_HEROES.Server.Services;
-using MGE_HEROES.Server.Models;
+using MGE_HEROES.Server.ModelDTO;
 
 namespace MGE_HEROES.Server.Controllers
 {
