@@ -4,7 +4,7 @@ using Supabase.Postgrest.Attributes;
 namespace MGE_HEROES.Server.Models
 {
     [Table("user_cards")]
-    public class user_cards: BaseModel
+    public class UserCard: BaseModel
     {
         [Column("user_id")]
         public Guid OwnerId { get; set; }
