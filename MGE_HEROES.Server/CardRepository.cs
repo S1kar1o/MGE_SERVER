@@ -1,6 +1,5 @@
 ﻿namespace MGE_HEROES.Server
 {
-    using MGE_HEROES.Server.ModelDTO;
     using MGE_HEROES.Server.Models;
 
     public class CardRepository

@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MGE_HEROES.Server.Models
 {
+    [Table("cards")]
+
     public class Card : BaseModel
     {
         [Column("id")]
