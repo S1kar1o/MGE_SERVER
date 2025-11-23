@@ -13,12 +13,12 @@ namespace MGE_HEROES.Server.Servises
 
         public async Task<CardListResponse> GetUserCards(Guid userId)
         {
-            var userCards = await _repo.GetUserCards(userId);
+            var userCards = await _repo.GetUserCards(userId); // List<string>
 
             return new CardListResponse
             {
                 UserId = userId,
-                Cards = userCards.Select(c => c.CardId).ToList()
+                Cards = userCards // просто передаємо список назв
             };
         }
 

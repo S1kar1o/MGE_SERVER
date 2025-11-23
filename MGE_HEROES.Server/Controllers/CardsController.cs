@@ -18,10 +18,9 @@ namespace MGE_HEROES.Server.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetUserCards(Guid userId)
         {
-            var cards = await _service.GetUserCards(userId);
-            return Ok(cards);
+            var response = await _service.GetUserCards(userId);
+            return Ok(response); // повертає { userId: "...", cards: ["Card1", "Card2"] }
         }
-
         [HttpPost("grant")]
         public async Task<IActionResult> GrantCards([FromBody] CardGrantRequest req)
         {
