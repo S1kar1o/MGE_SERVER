@@ -1,6 +1,5 @@
 ﻿using Supabase.Postgrest.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-
+using Supabase.Postgrest.Attributes; 
 namespace MGE_HEROES.Server.Models
 {
     [Table("cards")]
