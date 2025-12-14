@@ -1,6 +1,7 @@
 ﻿using MGE_HEROES.Server.ModelDTO;
 using MGE_HEROES.Server.Servises;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace MGE_HEROES.Server.Controllers
 {
@@ -20,7 +21,8 @@ namespace MGE_HEROES.Server.Controllers
         {
             var response = await _service.GetUserCards(userId);
             Console.WriteLine("HERRRRREEE");
-            Console.WriteLine(response);
+
+            Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
             return Ok(response);
         }
         [HttpPost("grant")]
