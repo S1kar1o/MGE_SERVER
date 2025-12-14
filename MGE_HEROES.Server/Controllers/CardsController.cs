@@ -19,6 +19,8 @@ namespace MGE_HEROES.Server.Controllers
         public async Task<IActionResult> GetUserCards(Guid userId)
         {
             var response = await _service.GetUserCards(userId);
+            Console.WriteLine("HERRRRREEE");
+            Console.WriteLine(response);
             return Ok(response);
         }
         [HttpPost("grant")]
