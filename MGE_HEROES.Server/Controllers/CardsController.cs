@@ -19,7 +19,7 @@ namespace MGE_HEROES.Server.Controllers
         public async Task<IActionResult> GetUserCards(Guid userId)
         {
             var response = await _service.GetUserCards(userId);
-            return Ok(response); // повертає { userId: "...", cards: ["Card1", "Card2"] }
+            return Ok(response);
         }
         [HttpPost("grant")]
         public async Task<IActionResult> GrantCards([FromBody] CardGrantRequest req)

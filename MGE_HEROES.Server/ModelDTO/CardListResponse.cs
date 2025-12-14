@@ -1,12 +1,16 @@
-﻿namespace MGE_HEROES.Server.ModelDTO
+﻿using MGE_HEROES.Server.Models;
+
+namespace MGE_HEROES.Server.ModelDTO
 {
     public class CardListResponse
     {
         public Guid UserId { get; set; }
-        public List<string> Cards { get; set; }
+        public List<CardDto> Cards { get; set; }
     }
-     public class CardDto
+    public class CardDto
     {
         public string Name { get; set; }
+        public short positionInDeck { get; set; }
+      
     }
 }

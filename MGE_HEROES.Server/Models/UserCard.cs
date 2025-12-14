@@ -10,5 +10,7 @@ namespace MGE_HEROES.Server.Models
         public Guid OwnerId { get; set; }
         [Column("card_id")]
         public int CardId {  get; set; }
+        [Column("card_selected_pos_id")]
+        public short CardPosInDec {  get; set; }
     }
 }

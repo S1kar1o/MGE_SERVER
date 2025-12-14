@@ -17,33 +17,24 @@
             return result.Models;
         }
 
-        public async Task<List<string>> GetUserCards(Guid userId)
+        public async Task<List<UserCard>> GetUserCards(Guid userId)
         {
-            // 1️⃣ Отримуємо всі записи user_cards для користувача
-            var userCardsResponse = await _client
+            var response = await _client
                 .From<UserCard>()
                 .Where(uc => uc.OwnerId == userId)
                 .Get();
 
-            var userCards = userCardsResponse.Models;
+            return response.Models;
+        }
 
-            if (!userCards.Any())
-                return new List<string>();
+        public async Task<List<Card>> GetCardsByIds(List<int> ids)
+        {
+            var response = await _client
+                .From<Card>()
+                .Filter("id", Supabase.Postgrest.Constants.Operator.In, ids)
+                .Get();
 
-            // 2️⃣ Створюємо список назв карт
-            var cardNames = new List<string>();
-
-            foreach (var uc in userCards)
-            {
-                var cardResponse = await _client
-                    .From<Card>()
-                    .Where(c => c.Id == uc.CardId)
-                    .Get();
-
-                cardNames.AddRange(cardResponse.Models.Select(c => c.Name));
-            }
-
-            return cardNames;
+            return response.Models;
         }
 
 
