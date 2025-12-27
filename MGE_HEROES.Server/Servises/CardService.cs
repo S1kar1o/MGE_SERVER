@@ -1,4 +1,5 @@
 ﻿using MGE_HEROES.Server.ModelDTO;
+using MGE_HEROES.Server.Models;
 
 namespace MGE_HEROES.Server.Servises
 {
@@ -14,18 +15,22 @@ namespace MGE_HEROES.Server.Servises
         public async Task<CardListResponse> GetUserCards(Guid userId)
         {
             var userCards = await _repo.GetUserCards(userId);
-
-            if (!userCards.Any())
+            var userHeroes = await _repo.GetUserHeroes(userId);
+            if (!userCards.Any()&&!userHeroes.Any())
                 return new CardListResponse
                 {
                     UserId = userId,
-                    Cards = new List<CardDto>()
+                    Cards = new List<CardDto>(),
+                    Heroes= new List<HeroDto>()
                 };
 
             var cardIds = userCards.Select(uc => uc.CardId).Distinct().ToList();
-            var cards = await _repo.GetCardsByIds(cardIds);
+            var heroIds = userHeroes.Select(uc=>uc.HeroId).Distinct().ToList();
 
-            var result = userCards.Select(uc =>
+            var cards = await _repo.GetCardsByIds(cardIds);
+            var heroes = await _repo.GetHeroesByIds(heroIds);
+
+            var cardsResult = userCards.Select(uc =>
             {
                 var card = cards.First(c => c.Id == uc.CardId);
                 return new CardDto
@@ -35,10 +40,20 @@ namespace MGE_HEROES.Server.Servises
                 };
             }).ToList();
 
+            var heroResult = userHeroes.Select(uc=>{
+                var hero = heroes.First(c => c.Id == uc.HeroId);
+                return new HeroDto {
+                    Name = hero.Name,
+                    isSelected = uc.isSelected
+                };
+
+            }).ToList();
+
             return new CardListResponse
             {
                 UserId = userId,
-                Cards = result
+                Cards = cardsResult,
+                Heroes = heroResult
             };
         }
 

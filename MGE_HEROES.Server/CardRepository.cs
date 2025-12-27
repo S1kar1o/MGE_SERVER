@@ -26,11 +26,29 @@
 
             return response.Models;
         }
+        public async Task<List<UserHero>> GetUserHeroes(Guid userId)
+        {
+            var response = await _client
+                .From<UserHero>()
+                .Where(uc => uc.OwnerId == userId)
+                .Get();
+
+            return response.Models;
+        }
 
         public async Task<List<Card>> GetCardsByIds(List<int> ids)
         {
             var response = await _client
                 .From<Card>()
+                .Filter("id", Supabase.Postgrest.Constants.Operator.In, ids)
+                .Get();
+
+            return response.Models;
+        }
+        public async Task<List<Hero>> GetHeroesByIds(List<int> ids)
+        {
+            var response = await _client
+                .From<Hero>()
                 .Filter("id", Supabase.Postgrest.Constants.Operator.In, ids)
                 .Get();
 
