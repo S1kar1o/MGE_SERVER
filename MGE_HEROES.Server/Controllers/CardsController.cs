@@ -31,6 +31,7 @@ namespace MGE_HEROES.Server.Controllers
                 var newCard = await _service.GenerateNewCardForPlayer(userId);
                 if (newCard != null)
                 {
+                    Console.WriteLine(newCard.Name);
                     return Ok(new GenerateCardResponse { Success = true, Card = newCard });
                 }
                 else
