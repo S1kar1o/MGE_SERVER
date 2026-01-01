@@ -16,16 +16,16 @@ namespace MGE_HEROES.Server.Servises
         {
             var userCards = await _repo.GetUserCards(userId);
             var userHeroes = await _repo.GetUserHeroes(userId);
-            if (!userCards.Any()&&!userHeroes.Any())
+            if (!userCards.Any() && !userHeroes.Any())
                 return new CardListResponse
                 {
                     UserId = userId,
                     Cards = new List<CardDto>(),
-                    Heroes= new List<HeroDto>()
+                    Heroes = new List<HeroDto>()
                 };
 
             var cardIds = userCards.Select(uc => uc.CardId).Distinct().ToList();
-            var heroIds = userHeroes.Select(uc=>uc.HeroId).Distinct().ToList();
+            var heroIds = userHeroes.Select(uc => uc.HeroId).Distinct().ToList();
 
             var cards = await _repo.GetCardsByIds(cardIds);
             var heroes = await _repo.GetHeroesByIds(heroIds);
@@ -40,9 +40,11 @@ namespace MGE_HEROES.Server.Servises
                 };
             }).ToList();
 
-            var heroResult = userHeroes.Select(uc=>{
+            var heroResult = userHeroes.Select(uc =>
+            {
                 var hero = heroes.First(c => c.Id == uc.HeroId);
-                return new HeroDto {
+                return new HeroDto
+                {
                     Name = hero.Name,
                     isSelected = uc.isSelected
                 };
@@ -57,12 +59,15 @@ namespace MGE_HEROES.Server.Servises
             };
         }
 
-
-        public async Task<bool> AddCards(Guid userId, List<int> cardIds)
+        public async Task<CardDto> GenerateNewCardForPlayer(Guid userId)
         {
-            await _repo.AddCardsToUser(userId, cardIds);
-            return true;
+            var cardName = await _repo.GenerateNewCard(userId);
+            short cardPosition = 0;//defaul non select position
+            return new CardDto { Name = cardName.Name,
+                positionInDeck = cardPosition
+            };
         }
+     
     }
 
 }

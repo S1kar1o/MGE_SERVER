@@ -13,7 +13,8 @@ namespace MGE_HEROES.Server.ModelDTO
         public string Name { get; set; }
         public short positionInDeck { get; set; }
 
-    }public class HeroDto
+    }
+    public class HeroDto
     {
         public string Name { get; set; }
         public bool isSelected { get; set; }

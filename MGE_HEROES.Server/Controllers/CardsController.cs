@@ -20,18 +20,40 @@ namespace MGE_HEROES.Server.Controllers
         public async Task<IActionResult> GetUserCards(Guid userId)
         {
             var response = await _service.GetUserCards(userId);
-            Console.WriteLine("HERRRRREEE");
-
-            Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
+         
             return Ok(response);
         }
-        [HttpPost("grant")]
-        public async Task<IActionResult> GrantCards([FromBody] CardGrantRequest req)
+        [HttpPost("generate/{userId}")]
+        public async Task<IActionResult> GenerateNewCard(Guid userId)
         {
-            var ok = await _service.AddCards(req.UserId, req.CardIds);
-            return ok ? Ok() : BadRequest();
+            try
+            {
+                var newCard = await _service.GenerateNewCardForPlayer(userId);
+                if (newCard != null)
+                {
+                    return Ok(new GenerateCardResponse { Success = true, Card = newCard });
+                }
+                else
+                {
+                    return Ok(new GenerateCardResponse
+                    {
+                        Success = false,
+                        Message = "You already have all cards! hope u like them and enjoying game"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
+    }
+    [System.Serializable]
+    public class GenerateCardResponse
+    {
+        public bool Success;
+        public string Message;
+        public CardDto Card; // Буде null, якщо Success = false
     }
 
 }
