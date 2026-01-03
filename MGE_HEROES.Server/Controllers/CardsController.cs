@@ -20,7 +20,7 @@ namespace MGE_HEROES.Server.Controllers
         public async Task<IActionResult> GetUserCards(Guid userId)
         {
             var response = await _service.GetUserCards(userId);
-         
+
             return Ok(response);
         }
         [HttpPost("generate/{userId}")]
@@ -31,12 +31,14 @@ namespace MGE_HEROES.Server.Controllers
                 var newCard = await _service.GenerateNewCardForPlayer(userId);
                 if (newCard != null)
                 {
-                    Console.WriteLine(newCard);
-                    return Ok(new GenerateCardResponse
+                    GenerateCardResponse unswer = new GenerateCardResponse
                     {
                         success = true,
                         card = new[] { newCard }
-                    });
+                    };
+                    Console.WriteLine(unswer);
+
+                    return Ok(unswer);
                 }
                 else
                 {
@@ -51,8 +53,8 @@ namespace MGE_HEROES.Server.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } 
-        
+        }
+
         [HttpPost("generateTenCards/{userId}")]
         public async Task<IActionResult> GenerateNewTenCard(Guid userId)
         {
