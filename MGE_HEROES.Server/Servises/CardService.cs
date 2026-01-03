@@ -66,6 +66,21 @@ namespace MGE_HEROES.Server.Servises
             return new CardDto { Name = cardName.Name,
                 positionInDeck = cardPosition
             };
+        } 
+        public async Task<CardDto[]> GenerateNewTenCards(Guid userId)
+        {
+            var cardName = await _repo.GenerateNewTenCards(userId);
+            short cardPosition = 0;//defaul non select position
+            CardDto[] cards = new CardDto[10];
+            for(int i = 0; i < cardName.Length; i++)
+            {
+                cards[i] = new CardDto()
+                {
+                    Name = cardName[i].Name,
+                    positionInDeck = 0
+                };
+            }
+            return cards;
         }
      
     }

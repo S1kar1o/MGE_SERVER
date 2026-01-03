@@ -32,6 +32,35 @@ namespace MGE_HEROES.Server.Controllers
                 if (newCard != null)
                 {
                     Console.WriteLine(newCard.Name);
+                    return Ok(new GenerateCardResponse
+                    {
+                        Success = true,
+                        Card = new[] { newCard }
+                    });
+                }
+                else
+                {
+                    return Ok(new GenerateCardResponse
+                    {
+                        Success = false,
+                        Message = "You already have all cards! hope u like them and enjoying game"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        } 
+        
+        [HttpPost("generateTenCards/{userId}")]
+        public async Task<IActionResult> GenerateNewTenCard(Guid userId)
+        {
+            try
+            {
+                var newCard = await _service.GenerateNewTenCards(userId);
+                if (newCard != null)
+                {
                     return Ok(new GenerateCardResponse { Success = true, Card = newCard });
                 }
                 else
@@ -54,7 +83,7 @@ namespace MGE_HEROES.Server.Controllers
     {
         public bool Success;
         public string Message;
-        public CardDto Card; // Буде null, якщо Success = false
+        public CardDto[] Card; // Буде null, якщо Success = false
     }
 
 }

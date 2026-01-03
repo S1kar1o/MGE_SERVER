@@ -54,6 +54,41 @@
 
             return selectedCard;
         }
+        public async Task<Card[]> GenerateNewTenCards(Guid userId)
+        {
+            var havenUnits = await GetUserCards(userId);
+            var allUnitsResponse = await _client.From<Card>().Get();
+            var allUnits = allUnitsResponse.Models;
+
+            var ownedCardIds = havenUnits.Select(u => u.CardId).ToHashSet();
+            List<Card> cards = allUnits.Where(c => !ownedCardIds.Contains(c.Id)).ToList();
+
+            // Перевірка: якщо у гравця вже є всі карти, що існують у грі
+            if (cards.Count == 0)
+            {
+                return null;
+              //throw new Exception("У гравця вже є всі доступні карти.");
+            }
+
+            Random random = new Random();
+            HashSet<int> indexes = new HashSet<int>();
+
+            while (indexes.Count < 10 && indexes.Count < cards.Count)
+            {
+                indexes.Add(random.Next(0, cards.Count));
+            }
+
+            Card[] selectedCards = indexes
+                .Select(i => cards[i])
+                .ToArray();
+
+           
+            await AddCardsToUser(userId, indexes.ToList());
+
+            // Не забудьте await, якщо метод асинхронний
+
+            return selectedCards;
+        }
         public async Task<List<UserHero>> GetUserHeroes(Guid userId)
         {
             var response = await _client
