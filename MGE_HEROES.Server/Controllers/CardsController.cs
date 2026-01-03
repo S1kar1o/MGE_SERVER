@@ -31,19 +31,19 @@ namespace MGE_HEROES.Server.Controllers
                 var newCard = await _service.GenerateNewCardForPlayer(userId);
                 if (newCard != null)
                 {
-                    Console.WriteLine(newCard.Name);
+                    Console.WriteLine(newCard);
                     return Ok(new GenerateCardResponse
                     {
-                        Success = true,
-                        Card = new[] { newCard }
+                        success = true,
+                        card = new[] { newCard }
                     });
                 }
                 else
                 {
                     return Ok(new GenerateCardResponse
                     {
-                        Success = false,
-                        Message = "You already have all cards! hope u like them and enjoying game"
+                        success = false,
+                        message = "You already have all cards! hope u like them and enjoying game"
                     });
                 }
             }
@@ -61,14 +61,16 @@ namespace MGE_HEROES.Server.Controllers
                 var newCard = await _service.GenerateNewTenCards(userId);
                 if (newCard != null)
                 {
-                    return Ok(new GenerateCardResponse { Success = true, Card = newCard });
+                    Console.WriteLine(newCard);
+
+                    return Ok(new GenerateCardResponse { success = true, card = newCard });
                 }
                 else
                 {
                     return Ok(new GenerateCardResponse
                     {
-                        Success = false,
-                        Message = "You already have all cards! hope u like them and enjoying game"
+                        success = false,
+                        message = "You already have all cards! hope u like them and enjoying game"
                     });
                 }
             }
@@ -81,9 +83,9 @@ namespace MGE_HEROES.Server.Controllers
     [System.Serializable]
     public class GenerateCardResponse
     {
-        public bool Success;
-        public string Message;
-        public CardDto[] Card; // Буде null, якщо Success = false
+        public bool success;
+        public string message;
+        public CardDto[] card; // Буде null, якщо Success = false
     }
 
 }
