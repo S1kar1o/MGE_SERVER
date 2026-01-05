@@ -1,14 +1,18 @@
 using MGE_HEROES.Server;
 using MGE_HEROES.Server.Services;
-using MGE_HEROES.Server.Servises; // Виправте опечатку: "Servises" -> "Services" (якщо це помилка)
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
+using MGE_HEROES.Server.Servises;
 using System.Net.WebSockets;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
+builder.Configuration.Sources.Clear();
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
 
 // Получение конфигурации для Supabase
 var url = builder.Configuration["SUPABASE_URL"] ?? throw new InvalidOperationException("SUPABASE_URL is not set");
@@ -23,7 +27,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddSingleton<ConnectionManager>();
-builder.Services.AddSingleton<MessageProcessor>(); // Виправте опечатку, якщо це "MessageProcessor"
+builder.Services.AddSingleton<MessageProcessor>();
 
 builder.Services.AddScoped<CardRepository>();
 builder.Services.AddScoped<CardService>();
